@@ -1,4 +1,4 @@
-# SQL Injection in Siempre CMS (user_search_ajax.php)
+# SQL Injection in Siempre CMS ``(user_search_ajax.php)``
 
 **Vulnerability Type:** SQL Injection (SQLi) 
 </br>
@@ -6,11 +6,9 @@
 </br>
 **Affected Parameters:** ``user-search-username, user-search-name``
 </br>
-**Product:** [SiempreCMS](https://github.com/SiempreCMS/SiempreCMS)
-</br>
-**Version:** 1.3.6
+**Product:** *[SiempreCMS v1.3.6](https://github.com/SiempreCMS/SiempreCMS)*
 
-The user_search_ajax.php file is vulnerable to SQL injection due to improper handling of user-supplied input. User inputs are passed directly to the database query without proper parameterization or prepared statements.
+The ``user_search_ajax.php`` file is vulnerable to SQL injection due to improper handling of user-supplied input. User inputs are passed directly to the database query without proper parameterization or prepared statements.
 
 The vulnerability resides on ``user_search_ajax.php``.
 
@@ -39,6 +37,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'search') {
 ---
 
 ### Proof-of-Concept
+You need to grab first your ``PHPSESSID`` after logging in so you can do the exploit.
+</br>
 The following curl command demonstrates SQL injection:
 
 ```bash
@@ -58,7 +58,7 @@ curl -X POST \
 
 ### Important Note: Browser vs Terminal Behavior
   - When the same payload ``(' OR 1=1 --)`` is entered directly in the web interface, it does not trigger the SQLi.
-  - This is because the front-end JavaScript (js/user.js) sanitizes or encodes the input before sending the AJAX request, preventing the raw payload from reaching the server.
+  - This is because the front-end JavaScript ``(js/user.js)`` sanitizes or encodes the input before sending the AJAX request, preventing the raw payload from reaching the server.
   - Directly sending the POST request via curl bypasses all front-end filtering, which is why the vulnerability is exploitable outside the browser interface.
 
 **Evidence:**
